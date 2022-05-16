@@ -1,4 +1,4 @@
-#app that contains only filepicker
+# app that contains only filepicker
 
 1. fill `.npmrc` with appropriate token
 ```shell
