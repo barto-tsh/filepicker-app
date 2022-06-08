@@ -2,11 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { FilePicker } from '@furgonetka/ui';
 
-/** here handle your callback */
-const onChange = (event) => {
-  console.log(event);
-};
-
 const groups = [
   {
     label: 'Faktura',
@@ -37,6 +32,17 @@ const message = (
   </>
 );
 
+/** here handle your callback */
+const onChange = (files) => {
+  const invoice = files.find((file) => file.key === 'invoice')?.uuid;
+  const statement = files.find((file) => file.key === 'statement')?.uuid;
+  const others = files.filter((file) => file.key === 'others').map((file) => file.uuid);
+
+  console.log('invoice: ', invoice);
+  console.log('statement: ', statement);
+  console.log('others: ', others);
+};
+
 const rootNode = document.getElementById('root');
 ReactDOM.render(
   <>
@@ -55,10 +61,10 @@ ReactDOM.render(
         },
       }}
       errorMessages={{
-        'file-invalid-type': (filesCount) =>  'Nieobsługiwany format ' + (filesCount > 1 ? 'plików.' : 'pliku.'),
+        'file-invalid-type': (filesCount) => 'Nieobsługiwany format ' + (filesCount > 1 ? 'plików.' : 'pliku.'),
         'file-too-large': (filesCount) => 'Przekroczono dopuszczalny rozmiar ' + (filesCount > 1 ? 'plików.' : 'pliku.'),
         'file-too-small': (filesCount) => (filesCount > 1 ? 'Pliki nie zostały dodane' : 'Plik nie został dodany') + ', przekroczono maksymalną ilość plików.',
-        'upload': (filesCount) =>   'Wystąpił problem podczas wgrywania ' + (filesCount > 1 ? 'plików.' : 'pliku.'),
+        'upload': (filesCount) => 'Wystąpił problem podczas wgrywania ' + (filesCount > 1 ? 'plików.' : 'pliku.'),
       }}
     />
   </>, rootNode);
